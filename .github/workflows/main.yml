@@ -1,4 +1,4 @@
-name: Windows - RustDesk
+name: Windows - Enhanced RustDesk
 
 on:
   workflow_dispatch:
@@ -12,38 +12,26 @@ jobs:
     steps:
       - name: Downloading Essentials
         run: |
-          try {
-              Invoke-WebRequest -Uri "https://gitlab.com/chamod12/win10-github-rdp-rustdesk/-/raw/main/Downloads.bat" -OutFile "C:\temp\Downloads.bat"
-              Invoke-WebRequest -Uri "https://gitlab.com/chamod12/win10-github-rdp-rustdesk/-/raw/main/show.bat" -OutFile "C:\temp\show.bat"
-              Invoke-WebRequest -Uri "https://gitlab.com/chamod12/win10-github-rdp-rustdesk/-/raw/main/time.py" -OutFile "C:\temp\time.py"
-          } catch {
-              Write-Host "Failed to download essentials: $_"
-              exit 1
-          }
-
+          Write-Host "Downloading essentials..."
+          Invoke-WebRequest -Uri "https://gitlab.com/chamod12/win10-github-rdp-rustdesk/-/raw/main/Downloads.bat" -OutFile "C:\temp\Downloads.bat"
+          Write-Host "Downloads.bat downloaded."
+          
       - name: Install Essentials
         run: |
-          try {
-              cmd /c C:\temp\Downloads.bat
-          } catch {
-              Write-Host "Failed to install essentials: $_"
-              exit 1
-          }
+          Write-Host "Installing essentials..."
+          cmd /c C:\temp\Downloads.bat
+          Write-Host "Installation completed."
 
       - name: Log In To RustDesk
         run: |
-          try {
-              cmd /c C:\temp\show.bat
-          } catch {
-              Write-Host "Failed to log in to RustDesk: $_"
-              exit 1
-          }
+          Write-Host "Logging in to RustDesk..."
+          Invoke-WebRequest -Uri "https://gitlab.com/chamod12/win10-github-rdp-rustdesk/-/raw/main/show.bat" -OutFile "C:\temp\show.bat"
+          cmd /c C:\temp\show.bat
+          Write-Host "Logged in to RustDesk."
 
       - name: Time Counter
         run: |
-          try {
-              python C:\temp\time.py
-          } catch {
-              Write-Host "Failed to run time counter: $_"
-              exit 1
-          }
+          Write-Host "Running time counter..."
+          Invoke-WebRequest -Uri "https://gitlab.com/chamod12/win10-github-rdp-rustdesk/-/raw/main/time.py" -OutFile "C:\temp\time.py"
+          python C:\temp\time.py
+          Write-Host "Time counter completed."
