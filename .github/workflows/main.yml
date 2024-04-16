@@ -12,13 +12,13 @@ jobs:
     steps:
       - name: Downloading & Installing Essentials
         run: |
-          Invoke-WebRequest -Uri "https://gitlab.com/chamod12/win10-github-rdp-rustdesk/-/raw/main/Downloads.bat" -OutFile "Downloads.bat"
-          Invoke-WebRequest -Uri "https://gitlab.com/chamod12/win10-github-rdp-rustdesk/-/raw/main/show.bat" -OutFile "show.bat"
-          Invoke-WebRequest -Uri "https://gitlab.com/chamod12/win10-github-rdp-rustdesk/-/raw/main/time.py" -OutFile "time.py"
-          cmd /c Downloads.bat
+          Invoke-WebRequest -Uri "https://gitlab.com/chamod12/win10-github-rdp-rustdesk/-/raw/main/Downloads.bat" -OutFile "C:\temp\Downloads.bat"
+          Invoke-WebRequest -Uri "https://gitlab.com/chamod12/win10-github-rdp-rustdesk/-/raw/main/show.bat" -OutFile "C:\temp\show.bat"
+          Invoke-WebRequest -Uri "https://gitlab.com/chamod12/win10-github-rdp-rustdesk/-/raw/main/time.py" -OutFile "C:\temp\time.py"
+          cmd /c C:\temp\Downloads.bat
 
       - name: Log In To RustDesk
-        run: cmd /c show.bat
+        run: cmd /c C:\temp\show.bat
 
       - name: Time Counter
-        run: python time.py
+        run: python C:\temp\time.py
