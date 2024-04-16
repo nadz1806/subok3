@@ -12,17 +12,38 @@ jobs:
     steps:
       - name: Downloading Essentials
         run: |
-          Invoke-WebRequest -Uri "https://gitlab.com/chamod12/win10-github-rdp-rustdesk/-/raw/main/Downloads.bat" -OutFile "C:\temp\Downloads.bat"
-          Invoke-WebRequest -Uri "https://gitlab.com/chamod12/win10-github-rdp-rustdesk/-/raw/main/show.bat" -OutFile "C:\temp\show.bat"
-          Invoke-WebRequest -Uri "https://gitlab.com/chamod12/win10-github-rdp-rustdesk/-/raw/main/time.py" -OutFile "C:\temp\time.py"
+          try {
+              Invoke-WebRequest -Uri "https://gitlab.com/chamod12/win10-github-rdp-rustdesk/-/raw/main/Downloads.bat" -OutFile "C:\temp\Downloads.bat"
+              Invoke-WebRequest -Uri "https://gitlab.com/chamod12/win10-github-rdp-rustdesk/-/raw/main/show.bat" -OutFile "C:\temp\show.bat"
+              Invoke-WebRequest -Uri "https://gitlab.com/chamod12/win10-github-rdp-rustdesk/-/raw/main/time.py" -OutFile "C:\temp\time.py"
+          } catch {
+              Write-Host "Failed to download essentials: $_"
+              exit 1
+          }
 
       - name: Install Essentials
         run: |
-          cmd /c C:\temp\Downloads.bat
+          try {
+              cmd /c C:\temp\Downloads.bat
+          } catch {
+              Write-Host "Failed to install essentials: $_"
+              exit 1
+          }
 
       - name: Log In To RustDesk
         run: |
-          cmd /c C:\temp\show.bat
+          try {
+              cmd /c C:\temp\show.bat
+          } catch {
+              Write-Host "Failed to log in to RustDesk: $_"
+              exit 1
+          }
 
       - name: Time Counter
-        run: python C:\temp\time.py
+        run: |
+          try {
+              python C:\temp\time.py
+          } catch {
+              Write-Host "Failed to run time counter: $_"
+              exit 1
+          }
